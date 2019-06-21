@@ -1,0 +1,23 @@
+{
+  "name": "constructor-hangman",
+  "version": "1.0.0",
+  "description": "A game of hangman playable in the terminal making use of npm packages, constructors and exports.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RhadMax/constructor-hangman.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RhadMax/constructor-hangman/issues"
+  },
+  "homepage": "https://github.com/RhadMax/constructor-hangman#readme",
+  "dependencies": {
+    "inquirer": "^6.4.0"
+  }
+}
