@@ -7,7 +7,8 @@ const usedWords = [];
 
 const divider = "\n --------------------------------------------------- \n";
 const spacer = "\r\n\r\n\r\n";
-
+let word;
+let guesses;
 
 function wordPicker() {
     let randomVal = Math.floor(Math.random() * words.length);
@@ -20,29 +21,35 @@ function wordPicker() {
 
 
 //gameplay block
-
-function gamePlay() {
-    console.log(spacer + spacer + spacer + divider + spacer + "Welcome to Constructor-Hangman!\n");
-    var word = new Word(wordPicker());
-    word.buildWord();
-    let guesses = 10;
-    round();
-    function round() {
+var round = function () {
+    if (guesses > 0) {
         console.log(word.lettersReference.join(""))
-        word.userGuess(" ");
         console.log(divider + spacer + word.display() + spacer + "You have " + guesses + " guesses remaining..." + divider)
         inquirer.prompt([
-
             {
                 type: "input",
                 name: "guess",
                 message: "What letter would you like to guess???"
             }
-
         ]).then(function (user) {
-
-        });
+            word.userGuess(user.guess)
+            guesses--;
+            round();
+        }).catch(function (err) {
+            console.log(err);
+            // err === the error above
+        });;
     }
+}
+
+function gamePlay() {
+    console.log(spacer + spacer + spacer + divider + spacer + "Welcome to Constructor-Hangman!\n");
+    word = new Word(wordPicker());
+    word.buildWord();
+    word.userGuess(" ");
+    guesses = 10;
+    round()
+
 };
 
 gamePlay();
