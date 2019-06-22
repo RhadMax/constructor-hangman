@@ -139,7 +139,7 @@ function playAgain() {
 
 function gamePlay() {
     guessedLetters = [];
-    console.log(clearText + divider + "Welcome to Constructor-Hangman!");
+    console.log(clearText + divider + "Welcome to Constructor-Hangman! \n See if you can guess this Sega Genisis game title!");
     word = new Word(wordPicker());
     word.buildWord();
     word.userGuess(" ");
