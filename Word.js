@@ -1,8 +1,9 @@
 var Letter = require("./Letter.js");
 
 function Word(newWord) {
+    this.newWord = newWord;
     this.lettersReference = newWord.split("");
-    this.letters = []
+    this.letters = [];
     this.buildWord = function () {
         for (var i = 0; i < this.lettersReference.length; i++) {
             this.letters.push(new Letter(this.lettersReference[i]))
