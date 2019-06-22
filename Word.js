@@ -27,9 +27,9 @@ function Word(newWord) {
 
 module.exports = Word;
 
-const table = new Word("Jurassic Park");
-table.buildWord();
-console.log(table.letters);
+// const table = new Word("Jurassic Park");
+// table.buildWord();
+// console.log(table.letters);
 // console.log(table.display());
 // table.userGuess("a");
 // console.log(table.display());

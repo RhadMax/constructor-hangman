@@ -10,7 +10,7 @@ function Letter(letter) {
     };
     this.isGuessed = function (guess) {
         if (guess === this.letter.toLowerCase()) {
-            this.guessed = true
+            this.guessed = true;
         }
         if (this.letter === " ") {
             this.guessed = true

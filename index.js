@@ -7,6 +7,7 @@ const usedWords = [];
 
 const divider = "\n --------------------------------------------------- \n";
 const spacer = "\r\n\r\n\r\n";
+const clearText = spacer+spacer+spacer+spacer+spacer+spacer+spacer+spacer+spacer+spacer;
 let word;
 let guesses;
 
@@ -22,32 +23,86 @@ function wordPicker() {
 
 //gameplay block
 var round = function () {
-    if (guesses > 0) {
-        console.log(word.lettersReference.join(""))
-        console.log(divider + spacer + word.display() + spacer + "You have " + guesses + " guesses remaining..." + divider)
+    let trigger = true
+    for (let i = 0; i < word.lettersReference.length; i++) {
+        if (!word.letters[i].guessed) {
+            trigger = false;
+        }
+    }
+    if (guesses < 1) {
+        console.log(clearText + divider + "You ran out of guesses, better luck next time!" + divider);
+        playAgain();
+    } else if (trigger) {
+        console.log(clearText + divider + "Nicely done! You guessed the word correctly." + divider)
+        playAgain();
+    }
+    else {
+        // console.log(divider + spacer + word.display() + spacer + divider )
+        console.log(divider + word.display() + divider + "\n  You have " + guesses + " guesses remaining..." + divider)
         inquirer.prompt([
             {
                 type: "input",
                 name: "guess",
-                message: "What letter would you like to guess???"
+                message: "What letter would you like to guess??? (Or type quit to exit game)"
             }
         ]).then(function (user) {
-            word.userGuess(user.guess)
-            guesses--;
-            round();
+           
+            if (user.guess.toLowerCase() === "quit") {
+                console.log(clearText +"Thanks for playing, goodbye!")
+                return;
+            }else if (user.guess.length > 1){
+                console.log(clearText +"You typed in " + user.guess.length + " characters")
+                console.log("Please only enter one letter!")
+                round();
+                return;
+            } 
+            let flag = false;
+            word.userGuess(user.guess);
+            for (let i = 0; i < word.lettersReference.length; i++){
+                if (word.letters[i].letter.toLowerCase() === user.guess) {
+                    flag = true;
+                }
+            }
+            if (flag) {
+                console.log(clearText + "You guessed: "+ user.guess.toUpperCase() + divider + "Nice! That was one of the letters");
+                round();
+            } else {
+                guesses--;
+                console.log(clearText + "You guessed: "+ user.guess.toUpperCase() + divider + "Oops, that wasn't one of the letters!");
+                round();
+            }
         }).catch(function (err) {
             console.log(err);
-            // err === the error above
-        });;
+        });
     }
 }
 
+function playAgain() {
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "input",
+            choices: ["Yes", "No"],
+            message: "Would you like to play another round?"
+        }
+    ]).then(function (user) {
+        if (user.input === "Yes") {
+            gamePlay();
+        } else {
+            console.log("Suit yourself... see you next time!")
+            return;
+        }
+    }).catch(function (err) {
+        console.log(err);
+    });
+}
+
 function gamePlay() {
-    console.log(spacer + spacer + spacer + divider + spacer + "Welcome to Constructor-Hangman!\n");
+    console.log(clearText + divider + "Welcome to Constructor-Hangman!\n");
     word = new Word(wordPicker());
     word.buildWord();
     word.userGuess(" ");
-    guesses = 10;
+    guesses = 5;
     round()
 
 };
