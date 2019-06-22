@@ -10,6 +10,8 @@ const spacer = "\r\n\r\n\r\n";
 const clearText = spacer+spacer+spacer+spacer+spacer+spacer+spacer+spacer+spacer+spacer;
 let word;
 let guesses;
+let won = 0;
+let lost = 0;
 
 function wordPicker() {
     let randomVal = Math.floor(Math.random() * words.length);
@@ -31,9 +33,13 @@ var round = function () {
     }
     if (guesses < 1) {
         console.log(clearText + divider + "You ran out of guesses, better luck next time!" + divider);
+        lost++;
+        console.log("You've won " + won + " rounds... \n ...and lost "+ lost+ " rounds." + divider)
         playAgain();
     } else if (trigger) {
         console.log(clearText + divider + "Nicely done! You guessed the word correctly." + divider)
+        won++;
+        console.log("You've won " + won + " rounds... \n ...and lost "+ lost+ " rounds." + divider)
         playAgain();
     }
     else {
@@ -50,7 +56,7 @@ var round = function () {
             if (user.guess.toLowerCase() === "quit") {
                 console.log(clearText +"Thanks for playing, goodbye!")
                 return;
-            }else if (user.guess.length > 1){
+            }else if (user.guess.length > 1 || user.guess.length === 0){
                 console.log(clearText +"You typed in " + user.guess.length + " characters")
                 console.log("Please only enter one letter!")
                 round();
